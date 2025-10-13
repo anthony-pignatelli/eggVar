@@ -5,7 +5,7 @@ date: 10-10-2025
 ---
 
 
-This is a step by step protocol to conduct an experiment in the *Tribolium* system to get at individual variation in egg laying.
+This is a step by step protocol to conduct an experiment in the *Tribolium* system to get at individual variation in egg laying. The goal is to get at the distribution of egg laying at the individual level.
 
 # Prep Info
 
@@ -20,11 +20,8 @@ This is a step by step protocol to conduct an experiment in the *Tribolium* syst
 - 2 kg of media
 - Metal scoop 
 - Labeling tape
+- 50 microcentrifuge tubes
 
-
-## Stock Container Prep
-1. Label each containers A-D
-2. Place 6 scoops of media into each container
 
 ## Experimental Container Prep
 1. Place a piece of labeling tape on each container, using a different color for each group (A-D)
@@ -32,7 +29,7 @@ This is a step by step protocol to conduct an experiment in the *Tribolium* syst
     + Unique ID - Letter/Number Combo
     + Date
     + Initials
-3. Place 5 grams of media into each container
+3. Place 5 grams of media into each container (or just a single scoop)
 
 # Seeding Info
 1. For each stock container, place 100 beetles into each (A-D)
@@ -42,6 +39,7 @@ This is a step by step protocol to conduct an experiment in the *Tribolium* syst
     - Make sure those from container A go into the A boxes and so on
 4. Allow beetles 24 hours to lay eggs
 5. Remove beetles after they lay eggs
+    - Store 50 beetles, from a single group, in individual microcentrifuge tubes with unique ID (this is in case we need to sex them)
 
 
 # Census
