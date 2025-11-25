@@ -15,6 +15,8 @@ output:
     fig_height: 6
     fig_width: 6
     theme: journal
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -53,8 +55,17 @@ library(dplyr)
 
 
 ```{r}
+dat <- read.csv("eggVar_data.csv")
 
+dat2 <- dat[,"numAdults"]
+dat2 <- na.omit(dat2)
 
+pdf("beetleDistribution.pdf", width = 10, height = 6)
+eggHist <- hist(x = dat2, xlab = "Number of offspring", main = "", 
+     ylim = c(0,250), xlim = c(0,170), breaks = seq(0, 170, 10), xaxt = "n")
+axis(side = 1, at = eggHist$breaks, labels = eggHist$breaks)
+abline(v = 9.048469, col = "firebrick", lwd = 2)
+dev.off()
 ```
 
 
