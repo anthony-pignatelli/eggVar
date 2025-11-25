@@ -19,23 +19,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+This code goes along with the eggVar project. The goal of this project was to determine the number of offspring an individual *T. castaneum* could produce over a 24 hour period in suitable habitat. 
 
 ```{r}
 
@@ -50,28 +34,67 @@ library(dplyr)
 
 ```
 
-
-
-
-
 ```{r}
 dat <- read.csv("eggVar_data.csv")
 
 dat2 <- dat[,"numAdults"]
 dat2 <- na.omit(dat2)
 
+dat3 <- dat2[which(dat2 > 0)]
+
 pdf("beetleDistribution.pdf", width = 10, height = 6)
-eggHist <- hist(x = dat2, xlab = "Number of offspring", main = "", 
-     ylim = c(0,250), xlim = c(0,170), breaks = seq(0, 170, 10), xaxt = "n")
+eggHist <- hist(x = dat3, xlab = "Number of offspring", main = "", 
+     ylim = c(0,40), xlim = c(0,170), breaks = seq(0, 170, 2), xaxt = "n")
 axis(side = 1, at = eggHist$breaks, labels = eggHist$breaks)
-abline(v = 9.048469, col = "firebrick", lwd = 2)
+abline(v = 16, col = "firebrick", lwd = 2)
 dev.off()
 ```
 
-
-
-
 ```{r}
+# use dat2 from above
+
+#' Estimate growth rate from a distribution
+#' @param offDist the distribution of offspring
+#' @param sampNum the number of individuals 
+#' @param popInitial the starting pop size
+#' @param alp the carrying capacity
+#' @return a list where one element is a vector of growth rates and the other is a vector of population sizes
+
+getGrowth <- function(offDist, sampNum, popInitial, alp = 0.002){
+  growthDist <- c()
+  popSize <- c()
+  tmpOff <- sample(offDist, size = sampNum, replace = TRUE, prob = NULL)
+  for (i in 1:sampNum) {
+    growthDist[i] <- log(tmpOff[i]/popInitial)
+  }
+  for (j in 1:sampNum) {
+    births <- rpois(1, growthDist[j]*popInitial)
+    survivors <- rbinom(1, births, exp(-1*((alp*popInitial))))
+    popSize[j] <- survivors
+  }
+
+  return(list(growthDist, popSize))
+}
+
+growthRates1 <- getGrowth(dat2, 1000, 1)
+growthRates10 <- getGrowth(offDist = dat2, sampNum = 1000, popInitial = 10)
+growthRates100 <- getGrowth(dat2, 1000, 100)
+
+makePlot <- function(x){
+  myPlot <- plot(x = x[[1]], y = x[[2]], pch = 16, xlab = "Growth Rate", ylab = "Population Size")
+  return(myPlot)
+}
+
+
+pdf("popSize_growth.pdf", width = 6, height = 6)
+thePlot <- makePlot(growthRates10)
+dev.off()
+
+
+pdf("growthRate_histogram.pdf", width = 6, height = 6)
+hist(x = growthRates100, xlab = "Growth rate of individuals", main = "",
+     breaks = 30)
+dev.off()
 
 ```
 
@@ -141,11 +164,6 @@ plotSegments <- function(y,x,
 
 ```
 
-
-
-
-
-
 Another useful function
 
 ```{r}
@@ -176,14 +194,7 @@ getHex <- function(x,y, colz=NULL, nbin=100,...){
 
 ```
 
-
-
-
-
-
-
 A linear regression of random data
-
 
 ```{r}
 
@@ -198,12 +209,6 @@ summary(mod)
 
 ```
 
-
-
-
-
-
-
 ```{r}
 
 plot(y, x)
@@ -213,16 +218,8 @@ plotSegments(y,x,
 
 ```
 
-
-
-
-
-
 ```{r}
 
 sessionInfo()
 
 ```
-
-
-
