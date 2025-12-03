@@ -99,7 +99,33 @@ dev.off()
 ```
 
 
+```{r}
+popsizeVec <- (seq(10, 100, by = 5))
 
+
+growthMat <- matrix(data = NA, nrow = 1000, ncol = length(popsizeVec))
+colnames(growthMat) <- popsizeVec
+for (i in 1:nrow(growthMat)) {
+  for (j in 1:ncol(growthMat)) {
+   tmp <- as.numeric(sum(sample(x = dat3, size = 10, replace = TRUE)))
+   growth <- log(tmp/as.numeric(popsizeVec[j]))
+   growthMat[i,j] <- growth
+  }
+}
+
+xtmp <- rep(popsizeVec, each = nrow(growthMat))  
+ytmp <- as.vector(growthMat)                   
+
+pdf("growthRate_by_popSize.pdf", width = 6, height = 6)
+plot(xtmp, ytmp,
+     xlab = "Population Size",
+     ylab = "Growth rate",
+     pch = 19, col = "black",
+     xlim = c(10, 100),
+     ylim = c(0, 4))
+abline(h = 1.29, col = 'red')
+dev.off()
+```
 
 
 All functions documented in the following format
